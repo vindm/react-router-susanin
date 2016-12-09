@@ -12,6 +12,7 @@
   "bugs": "https://github.com/ReactTraining/react-router/issues",
   "scripts": {
     "build": "npm run build-cjs",
+    "build-and-push": "npm run build-cjs && git add lib && git ci -m 'build' && git push",
     "build-cjs": "rimraf lib && BABEL_ENV=cjs babel ./modules -d lib --ignore __tests__",
     "lint": "eslint examples modules scripts tools *.js",
     "start": "node examples/server.js",
