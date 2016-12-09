@@ -1,8 +1,8 @@
-import warning from 'react-router/routerWarning';
-import computeChangedRoutes from 'react-router/computeChangedRoutes';
-import { runEnterHooks, runChangeHooks, runLeaveHooks } from 'react-router/TransitionUtils'
-import _isActive from 'react-router/isActive'
-import getComponents from 'react-router/getComponents'
+import warning from 'react-router/lib/routerWarning';
+import computeChangedRoutes from 'react-router/lib/computeChangedRoutes';
+import { runEnterHooks, runChangeHooks, runLeaveHooks } from 'react-router/lib/TransitionUtils'
+import _isActive from 'react-router/lib/isActive'
+import getComponents from 'react-router/lib/getComponents'
 import locationToState from './locationToState';
 
 function hasAnyProperties(object) {

@@ -1,7 +1,8 @@
-export * from 'react-router';
+const ReactRouter = require('ReactRouter');
 
-export createTransitionManager from './createTransitionManager';
-export extendRoutes from './extendRoutes';
-export generateReactRoutes from './generateReactRoutes';
+ReactRouter.createTransitionManager = require('./createTransitionManager');
+ReactRouter.extendRoutes = require('./extendRoutes');
+ReactRouter.generateReactRoutes = require('./generateReactRoutes');
 
-export Router from './Router';
+// reexport react-router with redefines
+module.exports = ReactRouter;
