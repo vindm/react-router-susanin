@@ -4,7 +4,7 @@ import React from 'react'
 import createTransitionManager from './createTransitionManager'
 import { routes } from 'react-router/lib/InternalPropTypes'
 import RouterContext from 'react-router/lib/RouterContext'
-import { createRouterObject, assignRouterState } from 'react-router/libRouterUtils'
+import { createRouterObject, assignRouterState } from 'react-router/lib/RouterUtils'
 import warning from 'react-router/lib/routerWarning'
 
 const { func, object } = React.PropTypes
