@@ -2,7 +2,6 @@ import warning from 'react-router/lib/routerWarning';
 import computeChangedRoutes from 'react-router/lib/computeChangedRoutes';
 import { runEnterHooks, runChangeHooks, runLeaveHooks } from 'react-router/lib/TransitionUtils'
 import _isActive from 'react-router/lib/isActive'
-import getComponents from 'react-router/lib/getComponents'
 import locationToState from './locationToState';
 
 function hasAnyProperties(object) {
@@ -64,18 +63,12 @@ export default function createTransitionManager(history, susanin) {
       if (error || redirectInfo)
         return handleErrorOrRedirect(error, redirectInfo)
 
-      // TODO: Fetch components after state is updated.
-      getComponents(nextState, function (error, components) {
-        if (error) {
-          callback(error)
-        } else {
-          // TODO: Make match a pure function and have some other API
-          // for "match and update state".
-          callback(null, null, (
-            state = { ...nextState, components })
-          )
-        }
-      })
+      if (error) {
+        callback(error)
+      } else {
+          state = Object.assign({}, nextState);
+          callback(null, null, state)
+      }
     }
 
     function handleErrorOrRedirect(error, redirectInfo) {

@@ -6,3 +6,4 @@ global.expect = chai.expect;
 
 require('./modules/__tests__/extendRoutes');
 require('./modules/__tests__/generateReactRoutes');
+require('./modules/__tests__/match');
