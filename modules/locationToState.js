@@ -1,8 +1,7 @@
-export default function locationToState(susanin, location) {
-    const match = susanin.findFirst(location.pathname);
+export default function locationToState(routeMatcher, location) {
+    const match = routeMatcher(location);
     if (match) {
-        const route = match[0];
-        const params = match[1];
+        const {route, params} = match;
         const routeData = route.getData();
 
         // RouterContext requires "route" object for every component

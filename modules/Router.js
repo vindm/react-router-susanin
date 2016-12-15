@@ -21,6 +21,7 @@ const Router = React.createClass({
         children: routes,
         routes, // alias for children
         render: func,
+        routeMatcher: func.isRequired,
         createElement: func,
         onError: func,
         onUpdate: func,
@@ -71,7 +72,7 @@ const Router = React.createClass({
             return matchContext.transitionManager;
         }
 
-        const {history, susanin} = this.props;
+        const {history, routeMatcher} = this.props;
 
         invariant(
             history.getCurrentLocation,
@@ -82,7 +83,7 @@ const Router = React.createClass({
 
         return createTransitionManager(
             history,
-            susanin
+            routeMatcher
         )
     },
 

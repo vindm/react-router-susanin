@@ -53,6 +53,16 @@ describe('match', function() {
         reactRoutes.forEach((route) => {
             this.susanin.addRoute(route);
         });
+
+        this.routeMatcher = (location) => {
+            const match = this.susanin.findFirst(location.pathname);
+            if (match) {
+                return {
+                    route: match[0],
+                    params: match[1]
+                };
+            }
+        }
     });
 
     describe('renderProps ->', function() {
@@ -60,7 +70,7 @@ describe('match', function() {
         it('should has route params', function(done) {
             match({
                 history: this.memoryHistory,
-                susanin: this.susanin
+                routeMatcher: this.routeMatcher
             }, (error, redirectLocation, renderProps) => {
                 expect(renderProps.params).to.be.eql({section: 'all', category: 'cars'});
                 done();
@@ -70,7 +80,7 @@ describe('match', function() {
         it('should has query params', function(done) {
             match({
                 history: this.memoryHistory,
-                susanin: this.susanin
+                routeMatcher: this.routeMatcher
             }, (error, redirectLocation, renderProps) => {
                 expect(renderProps.location.query).to.be.eql({test: '1'});
                 done();
@@ -81,7 +91,7 @@ describe('match', function() {
     it('should render route', function() {
         match({
             history: this.memoryHistory,
-            susanin: this.susanin
+            routeMatcher: this.routeMatcher
         }, (error, redirectLocation, renderProps) => {
             const result = ReactDOMServer.renderToStaticMarkup(
                 React.createElement(RouterContext, renderProps)

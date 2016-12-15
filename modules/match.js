@@ -13,17 +13,18 @@ import {createRouterObject} from 'react-router/lib/RouterUtils'
  * Note: You probably don't want to use this in a browser unless you're using
  * server-side rendering with async routes.
  */
-function match({history, susanin, location}, callback) {
+function match({history, routeMatcher, location}, callback) {
     invariant(
         history || location,
         'match needs a history or a location'
     );
+
     invariant(
-        susanin,
-        'match needs a Susanin instance'
+        typeof routeMatcher === 'function',
+        'match needs a routeMatcher function'
     );
 
-    const transitionManager = createTransitionManager(history, susanin);
+    const transitionManager = createTransitionManager(history, routeMatcher);
 
     if (location) {
         // Allow match({ location: '/the/path', ... })
