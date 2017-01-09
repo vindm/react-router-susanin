@@ -14,6 +14,7 @@ export default function locationToState(routeMatcher, location) {
         return {
             routes: routes,
             routeData: routeData,
+            routeName: route.getName(),
             components: routeData.components,
             params: params
         };
