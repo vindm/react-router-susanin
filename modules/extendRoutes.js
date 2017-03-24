@@ -14,9 +14,6 @@ export default function extendRoutes(susaninRoutes, reactData) {
     return susaninRoutes.map((route) => {
         if (route.data && route.data.react) {
             const components = reactData[route.name];
-            if (!components) {
-                throw new Error(`Missed components declaration for route "${route.name}"`)
-            }
             route.data.components = components;
         }
         return route;
