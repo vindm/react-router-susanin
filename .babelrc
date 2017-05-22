@@ -8,7 +8,7 @@
 
   "env": {
     "cjs": {
-      "plugins": ["add-module-exports"]
+      "plugins": ["add-module-exports", "transform-object-assign"]
     },
     "test": {
       "plugins": ["istanbul"]
