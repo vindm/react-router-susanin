@@ -10,13 +10,13 @@
  * @param {Object} componentsInfo
  */
 export default (susanin, componentsInfo) => {
-    for (let routeName in componentsInfo) {
-        const route = susanin.getRouteByName(routeName);
-        if (route) {
-            const routeData = route.getData();
-            if (routeData && routeData.react) {
-                routeData.components = componentsInfo[routeName];
-            }
+    susanin._routes.map((route) => {
+        const reactComponents = componentsInfo[route.getName()];
+        if (!reactComponents) {
+            return;
         }
-    }
+
+        const routeData = route.getData();
+        routeData.components = reactComponents;
+    });
 }
