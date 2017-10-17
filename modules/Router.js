@@ -1,5 +1,6 @@
 import invariant from 'invariant'
 import React from 'react'
+import PropTypes from 'prop-types';
 
 import createTransitionManager from './createTransitionManager'
 import { routes } from 'react-router/lib/InternalPropTypes'
@@ -7,45 +8,25 @@ import RouterContext from 'react-router/lib/RouterContext'
 import { createRouterObject, assignRouterState } from 'react-router/lib/RouterUtils'
 import warning from 'react-router/lib/routerWarning'
 
-const { func, object } = React.PropTypes
+const { func, object } = PropTypes;
 
 /**
  * A <Router> is a high-level API for automatically setting up
  * a router that renders a <RouterContext> with all the props
  * it needs each time the URL changes.
  */
-const Router = React.createClass({
+class Router extends React.PureComponent {
 
-    propTypes: {
-        history: object,
-        children: routes,
-        routes, // alias for children
-        render: func,
-        routeMatcher: func.isRequired,
-        createElement: func,
-        onError: func,
-        onUpdate: func,
+    constructor(props) {
+        super(props);
 
-        // PRIVATE: For client-side rehydration of server match.
-        matchContext: object
-    },
-
-    getDefaultProps() {
-        return {
-            render(props) {
-                return <RouterContext {...props} />
-            }
-        }
-    },
-
-    getInitialState() {
-        return {
+        this.state = {
             location: null,
             routes: null,
             params: null,
             components: null
         }
-    },
+    }
 
     handleError(error) {
         if (this.props.onError) {
@@ -54,7 +35,7 @@ const Router = React.createClass({
             // Throw errors by default so we don't silently swallow them!
             throw error // This error probably occurred in getChildRoutes or getComponents.
         }
-    },
+    }
 
     createRouterObject(state) {
         const { matchContext } = this.props
@@ -64,7 +45,7 @@ const Router = React.createClass({
 
         const { history } = this.props
         return createRouterObject(history, this.transitionManager, state)
-    },
+    }
 
     createTransitionManager() {
         const {matchContext} = this.props;
@@ -85,7 +66,7 @@ const Router = React.createClass({
             history,
             routeMatcher
         )
-    },
+    }
 
     componentWillMount() {
         this.transitionManager = this.createTransitionManager()
@@ -101,7 +82,7 @@ const Router = React.createClass({
                 this.setState(state, this.props.onUpdate)
             }
         })
-    },
+    }
 
   /* istanbul ignore next: sanity check */
     componentWillReceiveProps(nextProps) {
@@ -115,12 +96,12 @@ const Router = React.createClass({
             (this.props.routes || this.props.children),
             'You cannot change <Router routes>; it will be ignored'
         )
-    },
+    }
 
     componentWillUnmount() {
         if (this._unlisten)
             this._unlisten()
-    },
+    }
 
     render() {
         const { location, routes, params, components } = this.state
@@ -143,7 +124,26 @@ const Router = React.createClass({
             createElement
         })
     }
+}
 
-})
+Router.propTypes = {
+    history: object,
+    children: routes,
+    routes, // alias for children
+    render: func,
+    routeMatcher: func.isRequired,
+    createElement: func,
+    onError: func,
+    onUpdate: func,
+
+    // PRIVATE: For client-side rehydration of server match.
+    matchContext: object
+};
+
+Router.defaultProps = {
+    render(props) {
+        return <RouterContext {...props} />
+    }
+};
 
 export default Router

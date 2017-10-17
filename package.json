@@ -26,7 +26,8 @@
   "license": "MIT",
   "dependencies": {
     "history": "^3.0.0",
-    "invariant": "^2.2.1"
+    "invariant": "^2.2.1",
+    "prop-types": "^15.6.0"
   },
   "peerDependencies": {
     "react": "^15.0.0",
