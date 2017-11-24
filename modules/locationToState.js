@@ -1,22 +1,34 @@
-export default function locationToState(routeMatcher, location) {
+export default function locationToState(routeMatcher, location, section) {
     const match = routeMatcher(location);
-    if (match) {
-        const {route, params} = match;
-        const routeData = route.getData();
 
-        // RouterContext requires "route" object for every component
-        // in fact it's fake because susanin do all stuff
-        const fakeRoute = {name: route.getName(), data: routeData};
-        const routes = routeData.components.map(function() {
-            return fakeRoute
-        });
-
-        return {
-            routes: routes,
-            routeData: routeData,
-            routeName: route.getName(),
-            components: routeData.components,
-            params: params
-        };
+    if (! match) {
+        return;
     }
+
+    const { route, params } = match;
+    const routeName = route.getName();
+    const routeData = route.getData();
+    let components = routeData.components;
+
+    if (section && typeof components === 'object' && ! Array.isArray(components)) {
+        components = components[section];
+    }
+
+    const fake = typeof components === 'object' && ! Array.isArray(components) ?
+        components[Object.keys(components)[0]] :
+        components;
+
+    // RouterContext requires "route" object for every component
+    // in fact it's fake because susanin do all stuff
+    const routes = fake.map(() =>
+        ({ name: routeName, data: routeData }));
+
+    return {
+        params,
+        routes,
+        routeData,
+        routeName,
+        section,
+        components
+    };
 }

@@ -53,7 +53,7 @@ class Router extends React.PureComponent {
             return matchContext.transitionManager;
         }
 
-        const {history, routeMatcher} = this.props;
+        const {history, routeMatcher, section} = this.props;
 
         invariant(
             history.getCurrentLocation,
@@ -64,7 +64,8 @@ class Router extends React.PureComponent {
 
         return createTransitionManager(
             history,
-            routeMatcher
+            routeMatcher,
+            section
         )
     }
 

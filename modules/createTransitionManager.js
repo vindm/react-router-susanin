@@ -12,7 +12,7 @@ function hasAnyProperties(object) {
   return false
 }
 
-export default function createTransitionManager(history, routeMatcher) {
+export default function createTransitionManager(history, routeMatcher, section) {
   let state = {};
 
   // Signature should be (location, indexOnly), but needs to support (path,
@@ -32,7 +32,7 @@ export default function createTransitionManager(history, routeMatcher) {
       // Continue from where we left off.
       finishMatch(partialNextState, callback)
     } else {
-      const nextState = locationToState(routeMatcher, location);
+      const nextState = locationToState(routeMatcher, location, section);
       if (nextState) {
         finishMatch({ ...nextState, location }, callback)
       } else {
@@ -92,7 +92,7 @@ export default function createTransitionManager(history, routeMatcher) {
   }
 
   function transitionHook(location, callback) {
-      const nextState = locationToState(routeMatcher, location);
+      const nextState = locationToState(routeMatcher, location, section);
       if (nextState) {
           // Cache some state here so we don't have to
           // matchRoutes() again in the listen callback.
