@@ -18,6 +18,10 @@ export default function locationToState(routeMatcher, location, section) {
         components[Object.keys(components)[0]] :
         components;
 
+    if (! components) {
+        return;
+    }
+
     // RouterContext requires "route" object for every component
     // in fact it's fake because susanin do all stuff
     const routes = fake.map(() =>
