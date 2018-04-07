@@ -1,6 +1,6 @@
 import warning from 'react-router/lib/routerWarning';
 import computeChangedRoutes from 'react-router/lib/computeChangedRoutes';
-import { runEnterHooks, runChangeHooks, runLeaveHooks } from 'react-router/lib/TransitionUtils'
+import getTransitionUtils from 'react-router/lib/TransitionUtils'
 import _isActive from 'react-router/lib/isActive'
 import locationToState from './locationToState';
 
@@ -42,7 +42,8 @@ export default function createTransitionManager(history, routeMatcher, section) 
   }
 
   function finishMatch(nextState, callback) {
-    const { leaveRoutes, changeRoutes, enterRoutes } = computeChangedRoutes(state, nextState)
+    const { leaveRoutes, changeRoutes, enterRoutes } = computeChangedRoutes(state, nextState);
+    const { runEnterHooks, runChangeHooks, runLeaveHooks } = getTransitionUtils();
 
     runLeaveHooks(leaveRoutes, state)
 
